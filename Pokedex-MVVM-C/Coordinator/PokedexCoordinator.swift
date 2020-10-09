@@ -34,8 +34,8 @@ class PokedexCoordinator: AbstractCoordinator, RootCoordinator {
 		navigationController.pushViewController(vc, animated: true)
 	}
 	
-//	func moveToCaptured() {
-//		let vc = factory.makeCapturedPokemonTableViewController(coordinator: self)
-//		navigationController?.pushViewController(vc, animated: true)
-//	}
+	func moveToFavorites() {
+		let vc = factory.makeFavoritePokemonTableViewController(coordinator: self)
+		navigationController?.pushViewController(vc, animated: true)
+	}
 }
