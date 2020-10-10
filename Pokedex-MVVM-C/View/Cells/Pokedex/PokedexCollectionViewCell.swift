@@ -8,23 +8,16 @@
 import UIKit
 
 protocol PokedexCollectionViewCellDelegate: AnyObject {
-	func didAddFavorite(pokemon: Pokemon)
+	func didCatch(pokemon: Pokemon, with imageURL: URL)
 }
 
 class PokedexCollectionViewCell: UICollectionViewCell {
-	
-	let favoriteButton: UIButton = {
-		let button = UIButton()
-		button.translatesAutoresizingMaskIntoConstraints = false
-		button.setImage(UIImage.star, for: .normal)
-		button.tintColor = .systemYellow
-		return button
-	}()
 	
 	let pokemonImageView: UIImageView = {
 		let imageView = UIImageView()
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		imageView.contentMode = .scaleAspectFit
+		imageView.isUserInteractionEnabled = true
 		return imageView
 	}()
 	
@@ -47,6 +40,8 @@ class PokedexCollectionViewCell: UICollectionViewCell {
 			updateViews()
 		}
 	}
+	var imageURL: URL?
+	var caughtPokemon: Pokemon?
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -59,13 +54,10 @@ class PokedexCollectionViewCell: UICollectionViewCell {
 	}
 	
 	private func setup() {
+		isUserInteractionEnabled = true
 		contentView.addSubview(pokemonImageView)
-		pokemonImageView.addSubview(favoriteButton)
 		contentView.addSubview(nameLabel)
 		NSLayoutConstraint.activate([
-			favoriteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-			favoriteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-			
 			pokemonImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
 			pokemonImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
 			pokemonImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
@@ -76,7 +68,7 @@ class PokedexCollectionViewCell: UICollectionViewCell {
 			nameLabel.topAnchor.constraint(equalTo: pokemonImageView.bottomAnchor),
 			nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
 		])
-		favoriteButton.addTarget(self, action: #selector(favoriteAdded), for: .touchUpInside)
+		pokemonImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(pokemonCaught)))
 	}
 	
 	private func updateViews() {
@@ -87,8 +79,6 @@ class PokedexCollectionViewCell: UICollectionViewCell {
 			pokemonImageView.image = imageCache[url]
 		}
 		nameLabel.text = pokemon.name.capitalized
-		let image: UIImage = pokemon.isSelected ?? false ? .starFilled : .star
-		favoriteButton.setImage(image, for: .normal)
 	}
 	
 	private func fetchImage(for url: URL) {
@@ -101,6 +91,7 @@ class PokedexCollectionViewCell: UICollectionViewCell {
 					print(error)
 				case .success(let pokemonImage):
 					self.pokemon?.imageURL = pokemonImage.url
+					self.caughtPokemon = Pokemon(name: pokemon.name, url: pokemon.url, isSelected: false, imageURL: pokemonImage.url)
 				}
 			}
 		}
@@ -115,6 +106,7 @@ class PokedexCollectionViewCell: UICollectionViewCell {
 					case .failure: fatalError()
 					}
 				}
+				self.imageURL = imageURL
 			}
 		}
 		imageUrlOperation.addDependency(imageOperation)
@@ -123,9 +115,9 @@ class PokedexCollectionViewCell: UICollectionViewCell {
 	}
 	
 	@objc
-	private func favoriteAdded() {
-		guard let pokemon = pokemon else { return }
-		delegate?.didAddFavorite(pokemon: pokemon)
+	private func pokemonCaught() {
+		guard let pokemon = caughtPokemon, let imageURL = pokemon.imageURL else { return }
+		delegate?.didCatch(pokemon: pokemon, with: imageURL)
 	}
 }
 

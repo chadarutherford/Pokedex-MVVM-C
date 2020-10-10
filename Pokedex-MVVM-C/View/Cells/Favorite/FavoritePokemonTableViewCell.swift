@@ -8,6 +8,21 @@
 import UIKit
 
 class FavoritePokemonTableViewCell: UITableViewCell {
+	
+	let nameLabel: UILabel = {
+		let label = UILabel()
+		label.translatesAutoresizingMaskIntoConstraints = false
+		label.backgroundColor = .purple
+		return label
+	}()
+	
+	let pokemonImageView: UIImageView = {
+		let imageView = UIImageView()
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.backgroundColor = .blue
+		return imageView
+	}()
+	
 	var pokemon: FavoritePokemon? {
 		didSet {
 			updateViews()
@@ -25,7 +40,19 @@ class FavoritePokemonTableViewCell: UITableViewCell {
 	}
 	
 	private func setup() {
-		
+		contentView.addSubview(pokemonImageView)
+		contentView.addSubview(nameLabel)
+		NSLayoutConstraint.activate([
+			pokemonImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+			pokemonImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+			pokemonImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 16),
+			pokemonImageView.widthAnchor.constraint(equalToConstant: 40),
+			pokemonImageView.heightAnchor.constraint(equalTo: pokemonImageView.widthAnchor, multiplier: 1),
+			
+			nameLabel.centerYAnchor.constraint(equalTo: pokemonImageView.centerYAnchor),
+			nameLabel.leadingAnchor.constraint(equalTo: pokemonImageView.trailingAnchor, constant: 16),
+			nameLabel.trailingAnchor.constraint(greaterThanOrEqualTo: contentView.trailingAnchor, constant: -16)
+		])
 	}
 	
 	private func updateViews() {

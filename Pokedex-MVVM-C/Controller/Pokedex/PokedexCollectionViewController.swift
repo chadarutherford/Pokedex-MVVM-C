@@ -72,8 +72,7 @@ extension PokedexCollectionViewController: PokedexViewModelDelegate {
 }
 
 extension PokedexCollectionViewController: PokedexCollectionViewCellDelegate {
-	func didAddFavorite(pokemon: Pokemon) {
-		guard let imageURL = pokemon.imageURL else { return }
+	func didCatch(pokemon: Pokemon, with imageURL: URL) {
 		FavoriteService.shared.add(pokemon.name, imageURL: imageURL)
 	}
 }

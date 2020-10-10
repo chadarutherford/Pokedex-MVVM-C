@@ -35,7 +35,6 @@
 		634193C52530E5FB004C6BD9 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634193C42530E5FB004C6BD9 /* CoreDataStack.swift */; };
 		634193CB2530E8FA004C6BD9 /* FavoriteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634193CA2530E8FA004C6BD9 /* FavoriteService.swift */; };
 		634193D125310B92004C6BD9 /* FavoritePokemonTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634193D025310B92004C6BD9 /* FavoritePokemonTableViewController.swift */; };
-		634193D825310CC0004C6BD9 /* FavoritePokemonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634193D725310CC0004C6BD9 /* FavoritePokemonViewModel.swift */; };
 		634193E025311015004C6BD9 /* FavoritePokemonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634193DF25311015004C6BD9 /* FavoritePokemonTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -82,7 +81,6 @@
 		634193C42530E5FB004C6BD9 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		634193CA2530E8FA004C6BD9 /* FavoriteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteService.swift; sourceTree = "<group>"; };
 		634193D025310B92004C6BD9 /* FavoritePokemonTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePokemonTableViewController.swift; sourceTree = "<group>"; };
-		634193D725310CC0004C6BD9 /* FavoritePokemonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePokemonViewModel.swift; sourceTree = "<group>"; };
 		634193DF25311015004C6BD9 /* FavoritePokemonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePokemonTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -224,7 +222,6 @@
 			isa = PBXGroup;
 			children = (
 				6341934525308C89004C6BD9 /* Pokedex */,
-				634193D625310CAE004C6BD9 /* Favorite */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -376,14 +373,6 @@
 			path = Favorite;
 			sourceTree = "<group>";
 		};
-		634193D625310CAE004C6BD9 /* Favorite */ = {
-			isa = PBXGroup;
-			children = (
-				634193D725310CC0004C6BD9 /* FavoritePokemonViewModel.swift */,
-			);
-			path = Favorite;
-			sourceTree = "<group>";
-		};
 		634193DD25310FF2004C6BD9 /* Pokedex */ = {
 			isa = PBXGroup;
 			children = (
@@ -504,7 +493,6 @@
 			files = (
 				634193622530A1FE004C6BD9 /* UIImage+SFSymbols.swift in Sources */,
 				634193352530867E004C6BD9 /* AbstractCoordinator.swift in Sources */,
-				634193D825310CC0004C6BD9 /* FavoritePokemonViewModel.swift in Sources */,
 				634193E025311015004C6BD9 /* FavoritePokemonTableViewCell.swift in Sources */,
 				6341933125308628004C6BD9 /* RootCoordinator.swift in Sources */,
 				6341931625308521004C6BD9 /* PokedexCollectionViewController.swift in Sources */,

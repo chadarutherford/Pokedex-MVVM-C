@@ -13,7 +13,6 @@ protocol Factory {
 	func makePokedexViewModel(coordinator: RootCoordinator) -> PokedexViewModel
 	func makePokedexCoordinator() -> PokedexCoordinator
 	func makePokedexCollectionView(navigationController: UINavigationController) -> PokedexCollectionView
-	func makeFavoritePokemonViewModel(coordinator: PokedexCoordinator) -> FavoritePokemonViewModel
 	func makeFavoritePokemonTableViewController(coordinator: PokedexCoordinator) -> FavoritePokemonTableViewController
 }
 
@@ -44,14 +43,8 @@ class DependencyFactory: Factory {
 
 // MARK: - Favorites
 extension DependencyFactory {
-	func makeFavoritePokemonViewModel(coordinator: PokedexCoordinator) -> FavoritePokemonViewModel {
-		let viewModel = FavoritePokemonViewModel(coordinator: coordinator, networkManager: networkManager)
-		return viewModel
-	}
-	
 	func makeFavoritePokemonTableViewController(coordinator: PokedexCoordinator) -> FavoritePokemonTableViewController {
-		let viewModel = makeFavoritePokemonViewModel(coordinator: coordinator)
-		let favoritePokemonTableViewController = FavoritePokemonTableViewController(coordinator: coordinator, viewModel: viewModel)
+		let favoritePokemonTableViewController = FavoritePokemonTableViewController(coordinator: coordinator)
 		return favoritePokemonTableViewController
 	}
 }
