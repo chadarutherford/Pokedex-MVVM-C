@@ -36,6 +36,7 @@
 		634193CB2530E8FA004C6BD9 /* FavoriteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634193CA2530E8FA004C6BD9 /* FavoriteService.swift */; };
 		634193D125310B92004C6BD9 /* FavoritePokemonTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634193D025310B92004C6BD9 /* FavoritePokemonTableViewController.swift */; };
 		634193E025311015004C6BD9 /* FavoritePokemonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634193DF25311015004C6BD9 /* FavoritePokemonTableViewCell.swift */; };
+		635291452534CB290044D4E4 /* FavoritePokemonTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635291442534CB290044D4E4 /* FavoritePokemonTableViewCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		634193CA2530E8FA004C6BD9 /* FavoriteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteService.swift; sourceTree = "<group>"; };
 		634193D025310B92004C6BD9 /* FavoritePokemonTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePokemonTableViewController.swift; sourceTree = "<group>"; };
 		634193DF25311015004C6BD9 /* FavoritePokemonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePokemonTableViewCell.swift; sourceTree = "<group>"; };
+		635291442534CB290044D4E4 /* FavoritePokemonTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePokemonTableViewCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				6341934525308C89004C6BD9 /* Pokedex */,
+				635291432534CAFA0044D4E4 /* Favorite */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -389,6 +392,14 @@
 			path = Favorite;
 			sourceTree = "<group>";
 		};
+		635291432534CAFA0044D4E4 /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+				635291442534CB290044D4E4 /* FavoritePokemonTableViewCellViewModel.swift */,
+			);
+			path = Favorite;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -510,6 +521,7 @@
 				6341933C253088AE004C6BD9 /* DependencyFactory.swift in Sources */,
 				6341931425308521004C6BD9 /* SceneDelegate.swift in Sources */,
 				6341935825309009004C6BD9 /* ReuseIdentifiable.swift in Sources */,
+				635291452534CB290044D4E4 /* FavoritePokemonTableViewCellViewModel.swift in Sources */,
 				63419341253089F9004C6BD9 /* HTTPManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

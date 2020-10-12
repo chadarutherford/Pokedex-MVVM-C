@@ -36,6 +36,7 @@ class PokedexCoordinator: AbstractCoordinator, RootCoordinator {
 	
 	func moveToFavorites() {
 		let vc = factory.makeFavoritePokemonTableViewController(coordinator: self)
+		vc.viewModel = factory.makeFavoriteViewModel()
 		navigationController?.pushViewController(vc, animated: true)
 	}
 }

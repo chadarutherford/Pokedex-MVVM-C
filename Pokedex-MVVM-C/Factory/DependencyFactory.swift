@@ -14,6 +14,7 @@ protocol Factory {
 	func makePokedexCoordinator() -> PokedexCoordinator
 	func makePokedexCollectionView(navigationController: UINavigationController) -> PokedexCollectionView
 	func makeFavoritePokemonTableViewController(coordinator: PokedexCoordinator) -> FavoritePokemonTableViewController
+	func makeFavoriteViewModel() -> FavoritePokemonTableViewCellViewModel
 }
 
 class DependencyFactory: Factory {
@@ -46,5 +47,10 @@ extension DependencyFactory {
 	func makeFavoritePokemonTableViewController(coordinator: PokedexCoordinator) -> FavoritePokemonTableViewController {
 		let favoritePokemonTableViewController = FavoritePokemonTableViewController(coordinator: coordinator)
 		return favoritePokemonTableViewController
+	}
+	
+	func makeFavoriteViewModel() -> FavoritePokemonTableViewCellViewModel {
+		let viewModel = FavoritePokemonTableViewCellViewModel(networkManager: networkManager)
+		return viewModel
 	}
 }
