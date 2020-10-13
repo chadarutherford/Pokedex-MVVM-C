@@ -19,19 +19,23 @@ struct Pokemon: Codable, Equatable {
 }
 
 struct PokemonResult: Codable, Equatable {
-	let results: [Pokemon]
+	var results: [Pokemon]
 	
 	static func ==(lhs: PokemonResult, rhs: PokemonResult) -> Bool {
 		lhs.results == rhs.results
 	}
 }
 
-struct PokemonImage: Codable {
+struct PokemonImage: Codable, Equatable {
 	var url: URL?
 	
 	enum PokemonKeys: String, CodingKey {
 		case sprites
 		case image = "front_default"
+	}
+	
+	static func ==(lhs: PokemonImage, rhs: PokemonImage) -> Bool {
+		lhs.url == rhs.url
 	}
 
 	init(from decoder: Decoder) throws {

@@ -114,6 +114,10 @@ class PokedexCollectionViewCell: UICollectionViewCell {
 		OperationQueue.main.addOperation(imageOperation)
 	}
 	
+	override func prepareForReuse() {
+		pokemonImageView.image = nil
+	}
+	
 	@objc
 	private func pokemonCaught() {
 		guard let pokemon = caughtPokemon, let imageURL = pokemon.imageURL else { return }

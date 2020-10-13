@@ -10,13 +10,13 @@ import Foundation
 
 class CoreDataStack {
 	static let modelName = "FavoritePokemon"
-	static let shared = CoreDataStack()
+	
 	public static let model: NSManagedObjectModel = {
 		let modelURL = Bundle.main.url(forResource: modelName, withExtension: "momd")!
 		return NSManagedObjectModel(contentsOf: modelURL)!
 	}()
 	
-	private init() { }
+	init() { }
 	
 	lazy var mainContext: NSManagedObjectContext = {
 		self.storeContainer.viewContext
@@ -63,7 +63,7 @@ class CoreDataStack {
 			} catch let error as NSError {
 				fatalError("Unresolved error: \(error), \(error.userInfo)")
 			}
-			self.saveContext(self.mainContext)
+			self.saveContext()
 		}
 	}
 }

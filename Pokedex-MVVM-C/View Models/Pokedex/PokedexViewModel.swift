@@ -14,34 +14,60 @@ protocol PokedexViewModelDelegate: AnyObject {
 final class PokedexViewModel {
 	weak var delegate: PokedexViewModelDelegate?
 	private var networkManager: HTTPManagerProtocol?
-	private(set) var results: PokemonResult?
+	private(set) var results = [Pokemon]()
+	var pageNumber = 0
 	
 	init(coordinator: RootCoordinator?, networkManager: HTTPManagerProtocol) {
 		self.networkManager = networkManager
-		fetchData { result in
+		fetchData(withPageNumber: pageNumber) { result in
 			switch result {
-			case .failure: fatalError("Unable to decode Pokemon Results")
+			case .failure(let error):
+				print(error)
 			case .success(let results):
-				self.results = results
+				self.results.append(contentsOf: results.results)
 				self.delegate?.resultsWereSet()
 			}
 		}
 	}
 	
-	func fetchData(completion: @escaping (Result<PokemonResult, Error>) -> Void) {
-		guard let url = API.baseURL?.appendingPathComponent(API.pokemonList) else { return }
-		networkManager?.get(url: url) { result in
-			DispatchQueue.main.async {
-				switch result {
-				case .failure(let error):
-					completion(.failure(error))
-				case .success(let data):
-					let decoder = JSONDecoder()
-					do {
-						let results = try decoder.decode(PokemonResult.self, from: data)
-						completion(.success(results))
-					} catch {
+	func fetchData(withPageNumber pageNumber: Int, completion: @escaping (Result<PokemonResult, Error>) -> Void) {
+		guard let baseURL = API.baseURL?.appendingPathComponent(API.pokemonList) else { return }
+		if pageNumber > 0 {
+			var urlComponents = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)
+			let offsetItem = URLQueryItem(name: "offset", value: "\(pageNumber)")
+			let limitItem = URLQueryItem(name: "limit", value: "20")
+			urlComponents?.queryItems = [offsetItem, limitItem]
+			guard let url = urlComponents?.url else { return }
+			networkManager?.get(url: url) { result in
+				DispatchQueue.main.async {
+					switch result {
+					case .failure(let error):
 						completion(.failure(error))
+					case .success(let data):
+						let decoder = JSONDecoder()
+						do {
+							let results = try decoder.decode(PokemonResult.self, from: data)
+							completion(.success(results))
+						} catch {
+							completion(.failure(error))
+						}
+					}
+				}
+			}
+		} else {
+			networkManager?.get(url: baseURL) { result in
+				DispatchQueue.main.async {
+					switch result {
+					case .failure(let error):
+						completion(.failure(error))
+					case .success(let data):
+						let decoder = JSONDecoder()
+						do {
+							let results = try decoder.decode(PokemonResult.self, from: data)
+							completion(.success(results))
+						} catch {
+							completion(.failure(error))
+						}
 					}
 				}
 			}
@@ -77,6 +103,18 @@ final class PokedexViewModel {
 					guard let image = UIImage(data: data) else { return }
 					completion(.success(image))
 				}
+			}
+		}
+	}
+	
+	func addPokemon(withPageNumber pageNumber: Int) {
+		fetchData(withPageNumber: pageNumber) { results in
+			switch results {
+			case .failure(let error):
+				print(error)
+			case .success(let results):
+				self.results.append(contentsOf: results.results)
+				self.delegate?.resultsWereSet()
 			}
 		}
 	}

@@ -10,14 +10,14 @@ import UIKit
 
 final class FavoritePokemonTableViewController: UITableViewController {
 	typealias FavoriteSnapshot = NSDiffableDataSourceSnapshot<Int, FavoritePokemon>
-	typealias FavoriteDataSource = UITableViewDiffableDataSource<Int, FavoritePokemon>
-	
+	private lazy var coreDataStack = CoreDataStack()
+	private lazy var favoriteService = FavoriteService(managedObjectContext: coreDataStack.mainContext, coreDataStack: coreDataStack)
 	
 	lazy var fetchedResultsController: NSFetchedResultsController<FavoritePokemon> = {
 		let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
 		let fetchRequest: NSFetchRequest<FavoritePokemon> = FavoritePokemon.fetchRequest()
 		fetchRequest.sortDescriptors = [sortDescriptor]
-		let fetchedResultsController = NSFetchedResultsController<FavoritePokemon>(fetchRequest: fetchRequest, managedObjectContext: CoreDataStack.shared.mainContext, sectionNameKeyPath: nil, cacheName: nil)
+		let fetchedResultsController = NSFetchedResultsController<FavoritePokemon>(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.mainContext, sectionNameKeyPath: nil, cacheName: nil)
 		fetchedResultsController.delegate = self
 		return fetchedResultsController
 	}()
@@ -50,6 +50,7 @@ final class FavoritePokemonTableViewController: UITableViewController {
 		super.viewDidLoad()
 		tableView.register(FavoritePokemonTableViewCell.self, forCellReuseIdentifier: FavoritePokemonTableViewCell.reuseIdentifier)
 		tableView.rowHeight = 56
+		tableView.isUserInteractionEnabled = true
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -61,6 +62,23 @@ final class FavoritePokemonTableViewController: UITableViewController {
 				print("Fetching error: \(error), \(error.userInfo)")
 			}
 		}
+	}
+	
+	override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+		.delete
+	}
+	
+	override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		let delete = UIContextualAction(
+			style: .destructive,
+			title: "Delete") { (action, view, completion) in
+			guard let favorite = self.dataSource.itemIdentifier(for: indexPath) else { return }
+			self.favoriteService.delete(favorite)
+			self.updateSnapshot()
+			completion(true)
+		}
+		delete.image = .trash
+		return UISwipeActionsConfiguration(actions: [delete])
 	}
 	
 	private func updateSnapshot() {

@@ -9,5 +9,5 @@ import Foundation
 
 enum API {
 	static let baseURL = URL(string: "https://pokeapi.co/api/v2")
-	static let pokemonList = "pokemon"
+	static let pokemonList = "pokemon/"
 }

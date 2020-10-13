@@ -45,6 +45,7 @@ class FavoritePokemonTableViewCell: UITableViewCell {
 	}
 	
 	private func setup() {
+		isUserInteractionEnabled = true
 		contentView.addSubview(pokemonImageView)
 		contentView.addSubview(nameLabel)
 		NSLayoutConstraint.activate([
@@ -58,6 +59,10 @@ class FavoritePokemonTableViewCell: UITableViewCell {
 			nameLabel.leadingAnchor.constraint(equalTo: pokemonImageView.trailingAnchor, constant: 16),
 			nameLabel.trailingAnchor.constraint(greaterThanOrEqualTo: contentView.trailingAnchor, constant: -16)
 		])
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
 	}
 	
 	private func updateViews() {
